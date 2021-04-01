@@ -113,8 +113,42 @@ async def print_routine(ch):
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game('<3/ Workout'))
-    print(f'{client.user.name} deployed!')
+    print(f'Bot deployed!')
+    print('Logged in as:')
+    print(f'Username: {client.user.name}')
+    print(f'ID: {str(client.user.id)}')
+    print('------')
 
+
+
+
+#for Attendance reaction
+@client.command(pass_contest=True)
+async def testi(ctx):
+    await ctx.message.add_reaction("👍🏿") #adding reaction to the comand
+    embed = discord.Embed(
+        title = "Attendance 📋",
+        description = " React below to Mark your attendance  ",
+        color= discord.Color.purple()
+
+
+    )
+    msg = await ctx.send(embed=embed)
+    await msg.add_reaction("✅") #adding reaction to embed
+
+#taking user 
+    def check(reaction, user):
+        return user == ctx.author and str(reaction.emoji) in ['✅']
+#checking condition
+    while True:
+
+        reaction, user = await client.wait_for("reaction_add", timeout=60, check=check)
+        if str(reaction.emoji) == "✅":
+                await ctx.send('{} Done!'.format(user))
+
+
+    else:
+        await msg.remove_reaction(reaction, user) 
 
 @client.command()
 async def schedule(ctx):
