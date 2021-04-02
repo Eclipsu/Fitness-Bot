@@ -75,3 +75,32 @@ def get_routine(week_day):
         _6_link  = json_object[str(week_day)]['6']['link']
 
     return routine_title, _1_title, _1_reps, _1_link, _2_title, _2_reps, _2_link, _3_title, _3_reps, _3_link, _4_title, _4_reps, _4_link, _5_title, _5_reps, _5_link, _6_title, _6_reps, _6_link
+
+def get_user_data(user_id):
+    """
+    gets user data
+    """    
+    with open('routine.json', 'r') as openfile:
+        db = json.load(openfile)
+        workouts  = db[str(user_id)]["workouts"] 
+        streaks   = db[str(user_id)]["streak"]
+        skips     = db[str(user_id)]["skips"]
+    return workouts, streaks, skips
+
+def init_user(user_id):
+    """
+    initialize user data to database
+    """
+    init_data = {user_id:{"workouts":0,"streaks":0,"skips":0}}
+    with open("attendence.json", "r+") as openfile:
+        db = json.load(openfile)
+        
+        db.update(init_data)
+        openfile.seek(0)
+
+        json.dump(db, openfile, indent = 4)
+        # data = json.load(file)
+        # data.update(a_dictionary)
+        # file.seek(0)
+
+        # json.dump(data, file, indent = 4)
