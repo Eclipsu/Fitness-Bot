@@ -4,82 +4,9 @@ import asyncio                                  # time.sleep function.
 import json                                     # json module for reading and writing into json file(s).
 from datetime import datetime                   # datetime for getting current time. 
 import datetime as dt                           # datetime for setting time.
-
-def get_routine_time():
-    """
-    gets time for reminder.
-    Args:
-        wt_h = workout time (hour)
-        wt_m = workout time (minute)
-        wt_s = workout time (second)
-    Returns:
-        reminder time : wt_h, wt_m, wt_s
-    """
-
-    with open('routine.json', 'r') as openfile:
-        json_object = json.load(openfile)
-        pairs = json_object.item()
-        wt_h = json_object["reminder"]["h"]
-        wt_m = json_object["reminder"]["m"]
-        wt_s = json_object["reminder"]["s"]
-
-    return wt_h, wt_m, wt_s
-
-def get_token():
-    """
-    token grabber. returns: client's token  
-    """
-    with open('bot_config.json', 'r') as openfile:
-        json_object = json.load(openfile)
-        pairs = json_object.items()
-        bot_token = json_object["token"]
-    return bot_token
-
+import functions 
 
 client = commands.Bot(command_prefix = "<3 ")   # global bot delcaration.
-
-def get_routine(week_day):
-    """
-    get details about routines from routine.json
-    Takes:
-        week_day = week of the day eg: sunday, monday tuesday.
-    Args:
-        openfile, json_object, pairs = variables req by json module (honestly idk what it does). 
-        today_routine                = return value containing informations about the workouts.
-    Returns:
-        wokrout, video, thumnail_link, gif_link, rounds, etc.
-    """
-
-    with open('routine.json', 'r') as openfile:
-        json_object = json.load(openfile)
-        pairs = json_object.items()
-        
-        routine_title = json_object[str(week_day)]['title']
-        _1_title = json_object[str(week_day)]['1']['name']
-        _1_reps  = json_object[str(week_day)]['1']['reps']
-        _1_link  = json_object[str(week_day)]['1']['link']
-
-        _2_title = json_object[str(week_day)]['2']['name']
-        _2_reps  = json_object[str(week_day)]['2']['reps']
-        _2_link  = json_object[str(week_day)]['2']['link']
-
-        _3_title = json_object[str(week_day)]['3']['name']
-        _3_reps  = json_object[str(week_day)]['3']['reps']
-        _3_link  = json_object[str(week_day)]['3']['link']
-
-        _4_title = json_object[str(week_day)]['4']['name']
-        _4_reps  = json_object[str(week_day)]['4']['reps']
-        _4_link  = json_object[str(week_day)]['4']['link']
-
-        _5_title = json_object[str(week_day)]['5']['name']
-        _5_reps  = json_object[str(week_day)]['5']['reps']
-        _5_link  = json_object[str(week_day)]['5']['link']
-
-        _6_title = json_object[str(week_day)]['6']['name']
-        _6_reps  = json_object[str(week_day)]['6']['reps']
-        _6_link  = json_object[str(week_day)]['6']['link']
-
-    return routine_title, _1_title, _1_reps, _1_link, _2_title, _2_reps, _2_link, _3_title, _3_reps, _3_link, _4_title, _4_reps, _4_link, _5_title, _5_reps, _5_link, _6_title, _6_reps, _6_link
 
 async def print_routine(ch):
     """
@@ -112,7 +39,7 @@ async def print_routine(ch):
         await channel.send(embed = rest_embed)
         return
 
-    title,_1_title, _1_reps, _1_link,  _2_title, _2_reps, _2_link, _3_title, _3_reps, _3_link, _4_title, _4_reps, _4_link, _5_title, _5_reps, _5_link, _6_title, _6_reps, _6_link = get_routine(week_days[week_num])
+    title,_1_title, _1_reps, _1_link,  _2_title, _2_reps, _2_link, _3_title, _3_reps, _3_link, _4_title, _4_reps, _4_link, _5_title, _5_reps, _5_link, _6_title, _6_reps, _6_link = functions.get_routine(week_days[week_num])
     schedule_embed = discord.Embed(
         title = f'📋 {title}',
         color = discord.Color.purple(),
@@ -225,9 +152,9 @@ async def check_reminder():
         await asyncio.sleep(1)
         now = datetime.now()
         current_time  = now.strftime("%H:%M:%S")
-        wt_h, wt_m, wt_s = get_routine_time()
+        wt_h, wt_m, wt_s = functions.get_routine_time()
 
-        std_reminder = dt.time(wt_h, wt_m, wt_s)
+        std_reminder = dt.time(int(wt_h), int(wt_m), int(wt_s))
         if current_time == str(std_reminder):
             print('time')
             channel = client.get_channel(813017363443482645)
@@ -235,5 +162,5 @@ async def check_reminder():
             await print_routine(ch = 813017363443482645)
         
 client.loop.create_task(check_reminder())
-client.run(get_token())
+client.run(functions.get_token())
 
