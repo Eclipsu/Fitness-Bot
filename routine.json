@@ -1,4 +1,10 @@
-{
+{   
+    "reminder" : {
+        "h": 17,
+        "m": 0,
+        "s": 0
+    },
+    
     "sunday":{
     "title":"Push day",
     "1" : {

@@ -5,6 +5,26 @@ import json                                     # json module for reading and wr
 from datetime import datetime                   # datetime for getting current time. 
 import datetime as dt                           # datetime for setting time.
 
+def get_routine_time():
+    """
+    gets time for reminder.
+    Args:
+        wt_h = workout time (hour)
+        wt_m = workout time (minute)
+        wt_s = workout time (second)
+    Returns:
+        reminder time : wt_h, wt_m, wt_s
+    """
+
+    with open('routine.json', 'r') as openfile:
+        json_object = json.load(openfile)
+        pairs = json_object.item()
+        wt_h = json_object["reminder"]["h"]
+        wt_m = json_object["reminder"]["m"]
+        wt_s = json_object["reminder"]["s"]
+
+    return wt_h, wt_m, wt_s
+
 def get_token():
     """
     token grabber. returns: client's token  
@@ -135,18 +155,12 @@ async def testi(ctx):
     )
     msg = await ctx.send(embed=embed)
     await msg.add_reaction("✅") #adding reaction to embed
-
-#taking user 
     def check(reaction, user):
         return user == ctx.author and str(reaction.emoji) in ['✅']
-#checking condition
     while True:
-
         reaction, user = await client.wait_for("reaction_add", timeout=60, check=check)
         if str(reaction.emoji) == "✅":
                 await ctx.send('{} Done!'.format(user))
-
-
     else:
         await msg.remove_reaction(reaction, user) 
 
@@ -200,17 +214,21 @@ async def ping(ctx):
 async def check_reminder():
     """
     a function loop for checking reminder every sec.
+    Calls:
+        get_routine_time() to get routine time
     Args:
         now: current time
-          x: workout times
+        std_reminder: workout times
     """
     
     while(True):
         await asyncio.sleep(1)
         now = datetime.now()
         current_time  = now.strftime("%H:%M:%S")
-        x = dt.time(11, 16, 0)
-        if current_time == str(x):
+        wt_h, wt_m, wt_s = get_routine_time()
+
+        std_reminder = dt.time(wt_h, wt_m, wt_s)
+        if current_time == str(std_reminder):
             print('time')
             channel = client.get_channel(813017363443482645)
             await channel.send(f'<@&{825697640560853004}> Its time to grind!\n your schedule for today: ')
