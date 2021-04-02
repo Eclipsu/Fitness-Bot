@@ -8,6 +8,7 @@ import functions
 
 client = commands.Bot(command_prefix = "<3 ")   # global bot delcaration.
 
+
 async def print_routine(ch):
     """
     displays the schedule of the day (today).
@@ -68,6 +69,10 @@ async def on_ready():
 
 
 
+@client.command()
+async def init(ctx):
+    functions.init_user(str(ctx.author.id))
+    await ctx.send("Init! your data is up in our database")
 
 #for Attendance reaction
 @client.command(pass_contest=True)
