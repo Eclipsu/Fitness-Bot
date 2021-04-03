@@ -77,9 +77,23 @@ async def on_reaction_add(reaction, user):
     if reaction.message.channel.id != 827830863127248896:
         print(f"{reaction.message.channel.id} ")
         return
-    if reaction.emoji == "✅":
-        await channel.send(f'{user.name} SAHI HO')
-    if reaction.emoji == "❌":
+    if reaction.emoji == "✅": # Workout done
+        old_workout, old_streak, old_skip = functions.get_user_data(user.id)
+        new_workout = old_workout + 1
+        new_streak  = old_streak + 1
+        new_skip    = old_skip + 0
+        print(f"{old_workout}, {old_streak}, {old_skip}")
+        print(f"{new_workout}, {new_streak}, {new_skip}")
+
+        functions.set_user_data(user.id, new_workout, new_streak, new_skip)
+
+    if reaction.emoji == "❌": # Workout skip
+        old_workout, old_streak, old_skip = functions.get_user_data(user.id)
+        new_workout = old_workout + - 1
+        new_streak  = 0
+        new_skip    = old_skip + 1
+        functions.set_user_data(user.id, new_workout, new_streak, new_skip)
+
         await channel.send(f'{user.name} KINA NA GARYA >:(')
 
 @client.command()
@@ -89,25 +103,17 @@ async def init(ctx):
 
 #for Attendance reaction
 @client.command(pass_contest=True)
-async def testi(ctx):
-    await ctx.message.add_reaction("👍🏿") #adding reaction to the comand
-    embed = discord.Embed(
+async def attendence(ctx):
+    attendence_embed = discord.Embed(
         title = "Attendance 📋",
         description = " React below to Mark your attendance  ",
         color= discord.Color.purple()
-
-
     )
-    msg = await ctx.send(embed=embed)
-    await msg.add_reaction("✅") #adding reaction to embed
-    def check(reaction, user):
-        return user == ctx.author and str(reaction.emoji) in ['✅']
-    while True:
-        reaction, user = await client.wait_for("reaction_add", timeout=60, check=check)
-        if str(reaction.emoji) == "✅":
-                await ctx.send('{} Done!'.format(user))
-    else:
-        await msg.remove_reaction(reaction, user) 
+
+    attendence_channel = client.get_channel(827830863127248896)
+    msg = await attendence_channel.send(embed = attendence_embed)
+    await msg.add_reaction("✅") # YES
+    await msg.add_reaction("❌") # NO  
 
 @client.command()
 async def schedule(ctx):
@@ -174,7 +180,7 @@ async def check_reminder():
         std_reminder = dt.time(int(wt_h), int(wt_m), int(wt_s)) 
         # attendence_time = dt.time(int(wm_h), int(wt_m)  + 30, int(wt_s))
 
-        attendence_time = dt.time(int(wt_h), int(wt_m) + 30, 0)
+        attendence_time = dt.time(int(20), int(38) , 0)
         
         if current_time == str(std_reminder): # Reminder
             print('time')
@@ -196,5 +202,5 @@ async def check_reminder():
             await msg.add_reaction("❌") # NO 
  
 client.loop.create_task(check_reminder())
-client.run(functions.get_token())
+client.run("ODIyMjcxMjM3Nzk4ODg3NDI0.YFP1xA.2Iuy84mA8BGL7M-SwulPiLHxRGs")
 
