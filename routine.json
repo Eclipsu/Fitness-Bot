@@ -1,223 +1,214 @@
-{   
-    "reminder" : {
-        "h": 17,
-        "m": 0,
+{
+    "reminder": {
+        "h": 15,
+        "m": 30,
         "s": 0
     },
+
     
-    "sunday":{
-    "title":"Push day",
-    "1" : {
-        "name" : "Diamond pushups",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=J0DnG1_S92I"
-    },
-    "2" : {
-        "name" : "Widearm pushups",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=rr6eFNNDQdU"
-    },
-    "3" : {
-        "name" : "Archer pushups",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=A0r8ploEnZY"
-    },
-    "4" : {
-        "name" : "Bench dips",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=c3ZGl4pAwZ4"
-    },
-    "5" : {
-        "name" : "Decline pushups",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=SKPab2YC8BE"
-    },
-    "6" : {
-        "name" : "Dumbell Tricep extensions",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=_gsUck-7M74"
-    }
-
-
-    },
-    "monday" : {
-        "title" : "Pull day",
-        "1" : {
-            "name" : "Bicep curls",
-            "reps" : "6 (Heavy Weight)",
-            "link" : "https://www.youtube.com/watch?v=ykJmrZ5v0Oo"
+    "sunday": {
+        "title": "Push day",
+        "1": {
+            "name": "Diamond pushups",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=J0DnG1_S92I"
         },
-        "2" : {
-            "name" : "Dumbell Rows",
-            "reps" : "20",
-            "link" : "https://www.youtube.com/watch?v=-koP10y1qZI"
+        "2": {
+            "name": "Widearm pushups",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=rr6eFNNDQdU"
         },
-        "3" : {
-            "name" : "Normal Pullups",
-            "reps" : "10",
-            "link" : "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+        "3": {
+            "name": "Archer pushups",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=A0r8ploEnZY"
         },
-        "4" : {
-            "name" : "Weighted pullups",
-            "reps" : "5",
-            "link" : "https://www.youtube.com/watch?v=lXJA9rjie7g"
+        "4": {
+            "name": "Bench dips",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=c3ZGl4pAwZ4"
         },
-        "5" : {
-            "name" : "Bent over rows",
-            "reps" : "15",
-            "link" : "https://www.youtube.com/watch?v=LktGPg-AkvY&pbjreload=101"
+        "5": {
+            "name": "Decline pushups",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=SKPab2YC8BE"
         },
-        "6" : {
-            "name" : "Reverse flies",
-            "reps" : "15",
-            "link" : "https://www.youtube.com/watch?v=JoCRRZ3zRtI"
-        }
-        
-
-    },
-    "tuesday" : {
-        "title" : "Leg day",
-        "1" : {
-            "name" : "Assisted pistol squats ",
-            "reps" : "10)",
-            "link" : "https://www.youtube.com/watch?v=kc4YfSHjbYE"
-        },
-        "2" : {
-            "name" : "Back And forth jumping squat ",
-            "reps" : "10",
-            "link" : "https://www.youtube.com/watch?v=ZGFswQ8cWO0"
-        },
-        "3" : {
-            "name" : "Bulgarian split squat ",
-            "reps" : "10",
-            "link" : "https://www.youtube.com/watch?v=2C-uNgKwPLE"
-        },
-        "4" : {
-            "name" : "side to side jump squats ",
-            "reps" : "10",
-            "link" : "https://www.youtube.com/watch?v=Zxj8SOHn38Q"
-        },
-        "5" : {
-            "name" : "Normal Lunges",
-            "reps" : "15",
-            "link" : "https://www.youtube.com/watch?v=wrwwXE_x-pQ"
-        },
-        "6" : {
-            "name" : " Plyo jumping lunges ",
-            "reps" : "15",
-            "link" : "https://www.youtube.com/watch?v=R-pa3aQLVHA"
+        "6": {
+            "name": "Dumbell Tricep extensions",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=_gsUck-7M74"
         }
     },
-    "wednesday" : {
-        "title":"Push day",
-    "1" : {
-        "name" : "Diamond pushups",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=J0DnG1_S92I"
-    },
-    "2" : {
-        "name" : "Widearm pushups",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=rr6eFNNDQdU"
-    },
-    "3" : {
-        "name" : "Archer pushups",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=A0r8ploEnZY"
-    },
-    "4" : {
-        "name" : "Bench dips",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=c3ZGl4pAwZ4"
-    },
-    "5" : {
-        "name" : "Decline pushups",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=SKPab2YC8BE"
-    },
-    "6" : {
-        "name" : "Dumbell Tricep extensions",
-        "reps" : "10/20",
-        "link" : "https://www.youtube.com/watch?v=_gsUck-7M74"
-        }
-        
-        
-    },
-    "thursday" :{
-        "title" : "Pull day",
-        "1" : {
-            
-                    "name" : "Bicep curls",
-                    "reps" : "6 (Heavy Weight)",
-                    "link" : "https://www.youtube.com/watch?v=ykJmrZ5v0Oo"
-                },
-                "2" : {
-                    "name" : "Dumbell Rows",
-                    "reps" : "20",
-                    "link" : "https://www.youtube.com/watch?v=-koP10y1qZI"
-                },
-                "3" : {
-                    "name" : "Normal Pullups",
-                    "reps" : "10",
-                    "link" : "https://www.youtube.com/watch?v=eGo4IYlbE5g"
-                },
-                "4" : {
-                    "name" : "Weighted pullups",
-                    "reps" : "5",
-                    "link" : "https://www.youtube.com/watch?v=lXJA9rjie7g"
-                },
-                "5" : {
-                    "name" : "Bent over rows",
-                    "reps" : "15",
-                    "link" : "https://www.youtube.com/watch?v=LktGPg-AkvY&pbjreload=101"
-                },
-                "6" : {
-                    "name" : "Reverse flies",
-                    "reps" : "15",
-                    "link" : "https://www.youtube.com/watch?v=JoCRRZ3zRtI"
+    "monday": {
+        "title": "Pull day",
+        "1": {
+            "name": "Bicep curls",
+            "reps": "6 (Heavy Weight)",
+            "link": "https://www.youtube.com/watch?v=ykJmrZ5v0Oo"
+        },
+        "2": {
+            "name": "Dumbell Rows",
+            "reps": "20",
+            "link": "https://www.youtube.com/watch?v=-koP10y1qZI"
+        },
+        "3": {
+            "name": "Normal Pullups",
+            "reps": "10",
+            "link": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+        },
+        "4": {
+            "name": "Weighted pullups",
+            "reps": "5",
+            "link": "https://www.youtube.com/watch?v=lXJA9rjie7g"
+        },
+        "5": {
+            "name": "Bent over rows",
+            "reps": "15",
+            "link": "https://www.youtube.com/watch?v=LktGPg-AkvY&pbjreload=101"
+        },
+        "6": {
+            "name": "Reverse flies",
+            "reps": "15",
+            "link": "https://www.youtube.com/watch?v=JoCRRZ3zRtI"
         }
     },
-    "friday"   :{
-        "title" : "Rest day",
-        "*" : {
-            "name" : "Just rest 🛏️"
+    "tuesday": {
+        "title": "Leg day",
+        "1": {
+            "name": "Assisted pistol squats ",
+            "reps": "10)",
+            "link": "https://www.youtube.com/watch?v=kc4YfSHjbYE"
+        },
+        "2": {
+            "name": "Back And forth jumping squat ",
+            "reps": "10",
+            "link": "https://www.youtube.com/watch?v=ZGFswQ8cWO0"
+        },
+        "3": {
+            "name": "Bulgarian split squat ",
+            "reps": "10",
+            "link": "https://www.youtube.com/watch?v=2C-uNgKwPLE"
+        },
+        "4": {
+            "name": "side to side jump squats ",
+            "reps": "10",
+            "link": "https://www.youtube.com/watch?v=Zxj8SOHn38Q"
+        },
+        "5": {
+            "name": "Normal Lunges",
+            "reps": "15",
+            "link": "https://www.youtube.com/watch?v=wrwwXE_x-pQ"
+        },
+        "6": {
+            "name": " Plyo jumping lunges ",
+            "reps": "15",
+            "link": "https://www.youtube.com/watch?v=R-pa3aQLVHA"
         }
-        
-            
-        
     },
-    "saturday" :{
-        
-        "title" : "Leg day",
-        "1" : {
-            "name" : "Assisted pistol squats ",
-            "reps" : "10)",
-            "link" : "https://www.youtube.com/watch?v=kc4YfSHjbYE"
+    "wednesday": {
+        "title": "Push day",
+        "1": {
+            "name": "Diamond pushups",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=J0DnG1_S92I"
         },
-        "2" : {
-            "name" : "Back And forth jumping squat ",
-            "reps" : "10",
-            "link" : "https://www.youtube.com/watch?v=ZGFswQ8cWO0"
+        "2": {
+            "name": "Widearm pushups",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=rr6eFNNDQdU"
         },
-        "3" : {
-            "name" : "Bulgarian split squat ",
-            "reps" : "10",
-            "link" : "https://www.youtube.com/watch?v=2C-uNgKwPLE"
+        "3": {
+            "name": "Archer pushups",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=A0r8ploEnZY"
         },
-        "4" : {
-            "name" : "side to side jump squats ",
-            "reps" : "10",
-            "link" : "https://www.youtube.com/watch?v=Zxj8SOHn38Q"
+        "4": {
+            "name": "Bench dips",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=c3ZGl4pAwZ4"
         },
-        "5" : {
-            "name" : "Normal Lunges",
-            "reps" : "15",
-            "link" : "https://www.youtube.com/watch?v=wrwwXE_x-pQ"
+        "5": {
+            "name": "Decline pushups",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=SKPab2YC8BE"
         },
-        "6" : {
-            "name" : " Plyo jumping lunges ",
-            "reps" : "15",
-            "link" : "https://www.youtube.com/watch?v=R-pa3aQLVHA"
+        "6": {
+            "name": "Dumbell Tricep extensions",
+            "reps": "10/20",
+            "link": "https://www.youtube.com/watch?v=_gsUck-7M74"
+        }
+    },
+    "thursday": {
+        "title": "Pull day",
+        "1": {
+            "name": "Bicep curls",
+            "reps": "6 (Heavy Weight)",
+            "link": "https://www.youtube.com/watch?v=ykJmrZ5v0Oo"
+        },
+        "2": {
+            "name": "Dumbell Rows",
+            "reps": "20",
+            "link": "https://www.youtube.com/watch?v=-koP10y1qZI"
+        },
+        "3": {
+            "name": "Normal Pullups",
+            "reps": "10",
+            "link": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+        },
+        "4": {
+            "name": "Weighted pullups",
+            "reps": "5",
+            "link": "https://www.youtube.com/watch?v=lXJA9rjie7g"
+        },
+        "5": {
+            "name": "Bent over rows",
+            "reps": "15",
+            "link": "https://www.youtube.com/watch?v=LktGPg-AkvY&pbjreload=101"
+        },
+        "6": {
+            "name": "Reverse flies",
+            "reps": "15",
+            "link": "https://www.youtube.com/watch?v=JoCRRZ3zRtI"
+        }
+    },
+    "friday": {
+        "title": "Rest day",
+        "*": {
+            "name": "Just rest \ud83d\udecf\ufe0f"
+        }
+    },
+    "saturday": {
+        "title": "Leg day",
+        "1": {
+            "name": "Assisted pistol squats ",
+            "reps": "10)",
+            "link": "https://www.youtube.com/watch?v=kc4YfSHjbYE"
+        },
+        "2": {
+            "name": "Back And forth jumping squat ",
+            "reps": "10",
+            "link": "https://www.youtube.com/watch?v=ZGFswQ8cWO0"
+        },
+        "3": {
+            "name": "Bulgarian split squat ",
+            "reps": "10",
+            "link": "https://www.youtube.com/watch?v=2C-uNgKwPLE"
+        },
+        "4": {
+            "name": "side to side jump squats ",
+            "reps": "10",
+            "link": "https://www.youtube.com/watch?v=Zxj8SOHn38Q"
+        },
+        "5": {
+            "name": "Normal Lunges",
+            "reps": "15",
+            "link": "https://www.youtube.com/watch?v=wrwwXE_x-pQ"
+        },
+        "6": {
+            "name": " Plyo jumping lunges ",
+            "reps": "15",
+            "link": "https://www.youtube.com/watch?v=R-pa3aQLVHA"
         }
     }
+
 }

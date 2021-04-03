@@ -67,7 +67,20 @@ async def on_ready():
     print(f'ID: {str(client.user.id)}')
     print('------')
 
-
+@client.event
+async def on_reaction_add(reaction, user):
+    print(f"reaction:{reaction}, user: {user.id}")
+    channel = client.get_channel(827830863127248896)
+    if reaction.message.author.id == client.user.is_avatar_animated:
+        print("BOT")
+        return
+    if reaction.message.channel.id != 827830863127248896:
+        print(f"{reaction.message.channel.id} ")
+        return
+    if reaction.emoji == "✅":
+        await channel.send(f'{user.name} SAHI HO')
+    if reaction.emoji == "❌":
+        await channel.send(f'{user.name} KINA NA GARYA >:(')
 
 @client.command()
 async def init(ctx):
@@ -155,17 +168,33 @@ async def check_reminder():
     
     while(True):
         await asyncio.sleep(1)
-        now = datetime.now()
-        current_time  = now.strftime("%H:%M:%S")
-        wt_h, wt_m, wt_s = functions.get_routine_time()
+        now = datetime.now() 
+        current_time  = now.strftime("%H:%M:%S") # Current time
+        wt_h, wt_m, wt_s = functions.get_routine_time() # Reminder time
+        std_reminder = dt.time(int(wt_h), int(wt_m), int(wt_s)) 
+        # attendence_time = dt.time(int(wm_h), int(wt_m)  + 30, int(wt_s))
 
-        std_reminder = dt.time(int(wt_h), int(wt_m), int(wt_s))
-        if current_time == str(std_reminder):
-            print('time')
-            channel = client.get_channel(813017363443482645)
-            await channel.send(f'<@&{825697640560853004}> Its time to grind!\n your schedule for today: ')
-            await print_routine(ch = 813017363443482645)
+        attendence_time = dt.time(int(wt_h), int(wt_m) + 30, 0)
         
+        if current_time == str(std_reminder): # Reminder
+            print('time')
+            global channel
+            channel = client.get_channel(827830863127248896)
+            await channel.send(f'<@&{827834952896872489}> its time to grind!\n your schedule for today: ')
+            await print_routine(ch = 827830863127248896)
+        
+        if current_time == str(attendence_time): # Attendence
+            attendence_embed = discord.Embed(
+                title = "Attendance 📋",
+                description = " React below to Mark your attendance  ",
+                color= discord.Color.purple()
+            )
+
+            attendence_channel = client.get_channel(827830863127248896)
+            msg = await attendence_channel.send(embed = attendence_embed)
+            await msg.add_reaction("✅") # YES
+            await msg.add_reaction("❌") # NO 
+ 
 client.loop.create_task(check_reminder())
 client.run(functions.get_token())
 
