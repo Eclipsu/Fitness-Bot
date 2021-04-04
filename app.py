@@ -78,21 +78,26 @@ async def on_reaction_add(reaction, user):
         print(f"{reaction.message.channel.id} ")
         return
     if reaction.emoji == "✅": # Workout done
-        old_workout, old_streak, old_skip = functions.get_user_data(user.id)
-        new_workout = old_workout + 1
-        new_streak  = old_streak + 1
-        new_skip    = old_skip + 0
-        print(f"{old_workout}, {old_streak}, {old_skip}")
-        print(f"{new_workout}, {new_streak}, {new_skip}")
-
-        functions.set_user_data(user.id, new_workout, new_streak, new_skip)
-
+        try:
+            old_workout, old_streak, old_skip = functions.get_user_data(user.id)
+            new_workout = old_workout + 1
+            new_streak  = old_streak + 1
+            new_skip    = old_skip + 0
+            functions.set_user_data(user.id, new_workout, new_streak, new_skip)
+            print("vetyo")
+        except:
+            print("vetena")
+            functions.set_user_data(user.id, 0 + 1, 0, 0)
     if reaction.emoji == "❌": # Workout skip
-        old_workout, old_streak, old_skip = functions.get_user_data(user.id)
-        new_workout = old_workout + - 1
-        new_streak  = 0
-        new_skip    = old_skip + 1
-        functions.set_user_data(user.id, new_workout, new_streak, new_skip)
+        try:
+                
+            old_workout, old_streak, old_skip = functions.get_user_data(user.id)
+            new_workout = old_workout + - 1
+            new_streak  = 0
+            new_skip    = old_skip + 1
+            functions.set_user_data(user.id, new_workout, new_streak, new_skip)
+        except:
+            functions.set_user_data(user.id, 0, 0, 1)
 
         await channel.send(f'{user.name} KINA NA GARYA >:(')
 
@@ -202,5 +207,5 @@ async def check_reminder():
             await msg.add_reaction("❌") # NO 
  
 client.loop.create_task(check_reminder())
-client.run("ODIyMjcxMjM3Nzk4ODg3NDI0.YFP1xA.2Iuy84mA8BGL7M-SwulPiLHxRGs")
+client.run(functions.get_token())
 
