@@ -27,7 +27,6 @@ async def print_routine(ch):
     cr_month  = datetime.today().strftime('%m')
     cr_day    = datetime.today().strftime('%d')
     week_num  = dt.date(int(cr_year), int(cr_month), int(cr_day)).weekday()
-    print(week_num)
 
     if week_num == 4: #if its friday (rest day)
         rest_embed = discord.Embed(
@@ -69,10 +68,8 @@ async def on_ready():
 
 @client.event
 async def on_reaction_add(reaction, user):
-    print(f"reaction:{reaction}, user: {user.id}")
     channel = client.get_channel(827830863127248896)
     if reaction.message.author.id == client.user.is_avatar_animated:
-        print("BOT")
         return
     if reaction.message.channel.id != 827830863127248896:
         print(f"{reaction.message.channel.id} ")
@@ -84,9 +81,7 @@ async def on_reaction_add(reaction, user):
             new_streak  = old_streak + 1
             new_skip    = old_skip + 0
             functions.set_user_data(user.id, new_workout, new_streak, new_skip)
-            print("vetyo")
         except:
-            print("vetena")
             functions.set_user_data(user.id, 0 + 1, 0, 0)
     if reaction.emoji == "❌": # Workout skip
         try:
@@ -99,12 +94,38 @@ async def on_reaction_add(reaction, user):
         except:
             functions.set_user_data(user.id, 0, 0, 1)
 
-        await channel.send(f'{user.name} KINA NA GARYA >:(')
 
 @client.command()
-async def init(ctx):
-    functions.init_user(str(ctx.author.id))
-    await ctx.send("Init! your data is up in our database")
+async def profile(ctx):
+    """
+    Displays profile of a user.
+    Args:
+        workout, streak, skips = user data
+    """
+
+    try: # If user data is in our database
+        workout, streak, skips = functions.get_user_data(ctx.author.id)
+        profile_embed = discord.Embed(title="Profile", description="Your Profile", color = discord.Color.purple())
+        profile_embed.set_thumbnail(url = ctx.author.avatar_url)
+        profile_embed.add_field(name="Workouts: ", value = f"{workout} Days", inline=True) # Workouts
+        profile_embed.add_field(name="Skips: ", value = f"{skips}", inline=True) # Skips
+        profile_embed.add_field(name="Streaks: ", value = f"{streak}", inline=True)
+        profile_embed.set_footer(text = f"W/S: {int(skips) * int(workout)  }")
+        await ctx.send(content=None, embed=profile_embed)
+        profile_embed.set_footer(text = f'{ctx.author.name}')
+
+    except: # If its not in our database, make it.
+        functions.set_user_data(ctx.author.id, 0, 0, 0)
+        workout, streak, skips = functions.get_user_data(ctx.author.id)
+        profile_embed = discord.Embed(title="Profile", description="Your Profile", color = discord.Color.purple())
+        profile_embed.set_thumbnail(url = ctx.author.avatar_url)
+        profile_embed.add_field(name="Workouts: ", value = f"{workout} Days", inline=True) # Workouts
+        profile_embed.add_field(name="Skips: ", value = f"{skips}", inline=True) # Skips
+        profile_embed.add_field(name="Streaks: ", value = f"{streak}", inline=True)
+        profile_embed.set_footer(text = f"W/S: {int(skips) * int(workout)  }")
+        await ctx.send(content=None, embed=profile_embed)
+        profile_embed.set_footer(text = f'{ctx.author.name}')
+        
 
 #for Attendance reaction
 @client.command(pass_contest=True)
@@ -188,7 +209,6 @@ async def check_reminder():
         attendence_time = dt.time(int(20), int(38) , 0)
         
         if current_time == str(std_reminder): # Reminder
-            print('time')
             global channel
             channel = client.get_channel(827830863127248896)
             await channel.send(f'<@&{827834952896872489}> its time to grind!\n your schedule for today: ')
