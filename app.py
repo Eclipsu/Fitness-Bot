@@ -4,10 +4,50 @@ import asyncio                                  # time.sleep function.
 import json                                     # json module for reading and writing into json file(s).
 from datetime import datetime                   # datetime for getting current time. 
 import datetime as dt                           # datetime for setting time.
-import functions 
+import functions                                # external file containing getters and settrs and other functions
 
 client = commands.Bot(command_prefix = "<3 ")   # global bot delcaration.
 
+
+# bot on ready function
+@client.event
+async def on_ready():
+    wt_h, wt_m, wt_s = functions.get_routine_time()
+    await client.change_presence(activity = discord.Game("<3 profile"))
+    print(f'------')
+    print(f'Bot deployed!')
+    print(f'Logged in as: {client.user.name}')
+    print(f'------')
+    print(f'Reminder set to : {wt_h}:{wt_m}:{wt_s}')
+    print(f'------')
+
+
+@client.event
+async def on_reaction_add(reaction, user):
+    channel = client.get_channel(827830879359336448)
+    if reaction.message.author.id == client.user.id: # Ignore bots reaction
+        return
+    if reaction.message.channel.id != 827830879359336448: # Ignore other channels except attendence channnel
+        return
+
+    if reaction.emoji == "✅": # Workout done
+        try: # If user data exist in our db
+            old_workout, old_streak, old_skip = functions.get_user_data(user.id) # Get old user data
+            new_workout = old_workout + 1 # Incriment workout by 1
+            new_streak  = old_streak + 1 # Incriment streak by 1
+            new_skip    = old_skip + 0 # No changes
+            functions.set_user_data(user.id, new_workout, new_streak, new_skip) # Updates the user data
+        except: # If it doesn't exist.
+            functions.set_user_data(user.id, 0 + 1, 0, 0) # Makes user data
+    if reaction.emoji == "❌": # Workout skip
+        try:  # If user data exist in our db
+            old_workout, old_streak, old_skip = functions.get_user_data(user.id) # Get old user data
+            new_workout = old_workout + 0 # now changes
+            new_streak  = old_streak * 0 # Resets streak
+            new_skip    = old_skip + 1 # Increments streak by one
+            functions.set_user_data(user.id, new_workout, new_streak, new_skip) # Updates db
+        except: # If it doesn't exist.
+            functions.set_user_data(user.id, 0, 0, 1 )# Makes user data
 
 async def print_routine(ch):
     """
@@ -21,8 +61,8 @@ async def print_routine(ch):
         schedule_embed               = embed containing info about todays schedule.
     """
     
-    channel = client.get_channel(ch)
-    week_days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+    channel = client.get_channel(ch) # Channel ID
+    week_days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] 
     cr_year   = datetime.today().strftime('%Y')
     cr_month  = datetime.today().strftime('%m')
     cr_day    = datetime.today().strftime('%d')
@@ -54,46 +94,6 @@ async def print_routine(ch):
     schedule_embed.set_footer(text = 'DM us for more info')
 
     await channel.send(embed = schedule_embed)
-
-
-# bot on ready function
-@client.event
-async def on_ready():
-    await client.change_presence(activity=discord.Game('<3/ Workout'))
-    print(f'Bot deployed!')
-    print('Logged in as:')
-    print(f'Username: {client.user.name}')
-    print(f'ID: {str(client.user.id)}')
-    print('------')
-
-@client.event
-async def on_reaction_add(reaction, user):
-    channel = client.get_channel(827830863127248896)
-    if reaction.message.author.id == client.user.is_avatar_animated:
-        return
-    if reaction.message.channel.id != 827830863127248896:
-        print(f"{reaction.message.channel.id} ")
-        return
-    if reaction.emoji == "✅": # Workout done
-        try:
-            old_workout, old_streak, old_skip = functions.get_user_data(user.id)
-            new_workout = old_workout + 1
-            new_streak  = old_streak + 1
-            new_skip    = old_skip + 0
-            functions.set_user_data(user.id, new_workout, new_streak, new_skip)
-        except:
-            functions.set_user_data(user.id, 0 + 1, 0, 0)
-    if reaction.emoji == "❌": # Workout skip
-        try:
-                
-            old_workout, old_streak, old_skip = functions.get_user_data(user.id)
-            new_workout = old_workout + - 1
-            new_streak  = 0
-            new_skip    = old_skip + 1
-            functions.set_user_data(user.id, new_workout, new_streak, new_skip)
-        except:
-            functions.set_user_data(user.id, 0, 0, 1)
-
 
 @client.command()
 async def profile(ctx):
@@ -206,22 +206,23 @@ async def check_reminder():
         std_reminder = dt.time(int(wt_h), int(wt_m), int(wt_s)) 
         # attendence_time = dt.time(int(wm_h), int(wt_m)  + 30, int(wt_s))
 
-        attendence_time = dt.time(int(20), int(38) , 0)
+        attendence_time = dt.time(int(wt_h), int(wt_m) + 30, int(wt_s)) # Attendence 30 minutes after workout
         
         if current_time == str(std_reminder): # Reminder
             global channel
             channel = client.get_channel(827830863127248896)
-            await channel.send(f'<@&{827834952896872489}> its time to grind!\n your schedule for today: ')
+            await channel.send(f'<@&{827955469884325909}> its time to grind!\n your schedule for today: ')
             await print_routine(ch = 827830863127248896)
         
         if current_time == str(attendence_time): # Attendence
+            await channel.send(f'<@&{827955469884325909}> Did you do your workout?: ')
             attendence_embed = discord.Embed(
                 title = "Attendance 📋",
                 description = " React below to Mark your attendance  ",
                 color= discord.Color.purple()
             )
 
-            attendence_channel = client.get_channel(827830863127248896)
+            attendence_channel = client.get_channel(827830879359336448)
             msg = await attendence_channel.send(embed = attendence_embed)
             await msg.add_reaction("✅") # YES
             await msg.add_reaction("❌") # NO 
