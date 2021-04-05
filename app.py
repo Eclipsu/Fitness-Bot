@@ -102,7 +102,6 @@ async def profile(ctx):
     Args:
         workout, streak, skips = user data
     """
-
     try: # If user data is in our database
         workout, streak, skips = functions.get_user_data(ctx.author.id)
         profile_embed = discord.Embed(title="Profile", description="Your Profile", color = discord.Color.purple())
