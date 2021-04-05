@@ -25,8 +25,8 @@ async def on_ready():
 @client.event
 async def on_reaction_add(reaction, user):
     channel = client.get_channel(827830879359336448)
-    if reaction.message.author.id == client.user.id: # Ignore bots reaction
-        return
+    # if reaction.message.author.id == client.user.id: # Ignore bots reaction
+    #     return
     if reaction.message.channel.id != 827830879359336448: # Ignore other channels except attendence channnel
         return
 
@@ -135,8 +135,7 @@ async def attendence(ctx):
         color= discord.Color.purple()
     )
 
-    attendence_channel = client.get_channel(827830863127248896)
-    msg = await attendence_channel.send(embed = attendence_embed)
+    msg = await ctx.send(embed = attendence_embed)
     await msg.add_reaction("✅") # YES
     await msg.add_reaction("❌") # NO  
 
