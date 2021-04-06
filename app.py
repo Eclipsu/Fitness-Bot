@@ -95,36 +95,72 @@ async def print_routine(ch):
 
     await channel.send(embed = schedule_embed)
 
+
 @client.command()
-async def profile(ctx):
+async def profile(ctx, member : discord.Member):
     """
     Displays profile of a user.
     Args:
         workout, streak, skips = user data
     """
     try: # If user data is in our database
-        workout, streak, skips = functions.get_user_data(ctx.author.id)
-        profile_embed = discord.Embed(title="Profile", description="Your Profile", color = discord.Color.purple())
-        profile_embed.set_thumbnail(url = ctx.author.avatar_url)
+        workout, streak, skips = functions.get_user_data(member.id)
+        profile_embed = discord.Embed(title="Profile", description=f"{member.name}'s profile", color = discord.Color.purple())
+        profile_embed.set_thumbnail(url = member.avatar_url)
         profile_embed.add_field(name="Workouts: ", value = f"{workout} Days", inline=True) # Workouts
         profile_embed.add_field(name="Skips: ", value = f"{skips}", inline=True) # Skips
         profile_embed.add_field(name="Streaks: ", value = f"{streak}", inline=True)
         profile_embed.set_footer(text = f"W/S: {int(skips) * int(workout)  }")
         await ctx.send(content=None, embed=profile_embed)
-        profile_embed.set_footer(text = f'{ctx.author.name}')
+        profile_embed.set_footer(text = f'{member.name}')
 
     except: # If its not in our database, make it.
-        functions.set_user_data(ctx.author.id, 0, 0, 0)
-        workout, streak, skips = functions.get_user_data(ctx.author.id)
-        profile_embed = discord.Embed(title="Profile", description="Your Profile", color = discord.Color.purple())
-        profile_embed.set_thumbnail(url = ctx.author.avatar_url)
+        functions.set_user_data(member.id, 0, 0, 0)
+        workout, streak, skips = functions.get_user_data(member.id)
+        profile_embed = discord.Embed(title="Profile", description=f"{member.name}'s' Profile", color = discord.Color.purple())
+        profile_embed.set_thumbnail(url = member.avatar_url)
         profile_embed.add_field(name="Workouts: ", value = f"{workout} Days", inline=True) # Workouts
         profile_embed.add_field(name="Skips: ", value = f"{skips}", inline=True) # Skips
         profile_embed.add_field(name="Streaks: ", value = f"{streak}", inline=True)
         profile_embed.set_footer(text = f"W/S: {int(skips) * int(workout)  }")
         await ctx.send(content=None, embed=profile_embed)
-        profile_embed.set_footer(text = f'{ctx.author.name}')
-        
+        profile_embed.set_footer(text = f'{member.name}')
+
+@profile.error
+async def profile_handler(ctx, error):
+    """A local Error Handler for our command do_repeat.
+    This will only listen for errors in do_repeat.
+    The global on_command_error will still be invoked after.
+    """
+
+    # Check if our required argument inp is missing.
+    if isinstance(error, commands.MissingRequiredArgument):
+        if error.param.name == 'member':
+            try: # If user data is in our database
+                workout, streak, skips = functions.get_user_data(ctx.author.id)
+                profile_embed = discord.Embed(title="Profile", description= f"{ctx.author.name} Profile", color = discord.Color.purple())
+                profile_embed.set_thumbnail(url = ctx.author.avatar_url)
+                profile_embed.add_field(name="Workouts: ", value = f"{workout} Days", inline=True) # Workouts
+                profile_embed.add_field(name="Skips: ", value = f"{skips}", inline=True) # Skips
+                profile_embed.add_field(name="Streaks: ", value = f"{streak}", inline=True)
+                profile_embed.set_footer(text = f"W/S: {int(skips) * int(workout)  }")
+                await ctx.send(content=None, embed=profile_embed)
+                profile_embed.set_footer(text = f'{ctx.author.name}')
+
+            except: # If its not in our database, make it.
+                functions.set_user_data(ctx.author.id, 0, 0, 0)
+                workout, streak, skips = functions.get_user_data(ctx.author.id)
+                profile_embed = discord.Embed(title="Profile", description=f"{ctx.author.name}", color = discord.Color.purple())
+                profile_embed.set_thumbnail(url = ctx.author.avatar_url)
+                profile_embed.add_field(name="Workouts: ", value = f"{workout} Days", inline=True) # Workouts
+                profile_embed.add_field(name="Skips: ", value = f"{skips}", inline=True) # Skips
+                profile_embed.add_field(name="Streaks: ", value = f"{streak}", inline=True)
+                profile_embed.set_footer(text = f"W/S: {int(skips) * int(workout)  }")
+                await ctx.send(content=None, embed=profile_embed)
+                profile_embed.set_footer(text = f'{ctx.author.name}')
+
+
+
 
 #for Attendance reaction
 @client.command(pass_contest=True)
