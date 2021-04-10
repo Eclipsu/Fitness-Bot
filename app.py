@@ -123,7 +123,7 @@ async def profile(ctx, member : discord.Member):
 
 
     except: # If its not in our database, make it.
-        functions.set_user_data(member.id, 1, 0, 0, 1)
+        functions.set_user_data(member.id, 0, 0, 0, 0)
         workout, streak, skips, top_streak = functions.get_user_data(member.id)
         profile_embed = discord.Embed(title="Profile", description=f"{member.name}'s' Profile", color = discord.Color.purple())
         profile_embed.set_thumbnail(url = member.avatar_url)
@@ -156,7 +156,7 @@ async def profile_handler(ctx, error):
 
 
             except: # If its not in our database, make it.
-                functions.set_user_data(ctx.author.id, 1, 0, 0, 1)
+                functions.set_user_data(ctx.author.id, 0, 0, 0, 0)
                 workout, streak, skips, top_streak = functions.get_user_data(ctx.author.id)
                 profile_embed = discord.Embed(title="Profile", description=f"{ctx.author.name}", color = discord.Color.purple())
                 profile_embed.set_thumbnail(url = ctx.author.avatar_url)
