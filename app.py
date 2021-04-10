@@ -32,22 +32,30 @@ async def on_reaction_add(reaction, user):
 
     if reaction.emoji == "✅": # Workout done
         try: # If user data exist in our db
-            old_workout, old_streak, old_skip = functions.get_user_data(user.id) # Get old user data
+            old_workout, old_streak, old_skip, old_top_streak = functions.get_user_data(user.id) # Get old user data
             new_workout = old_workout + 1 # Incriment workout by 1
             new_streak  = old_streak + 1 # Incriment streak by 1
             new_skip    = old_skip + 0 # No changes
-            functions.set_user_data(user.id, new_workout, new_streak, new_skip) # Updates the user data
+            if new_streak == old_top_streak or new_streak > old_top_streak:
+                new_top_streak = old_top_streak + 1
+            elif new_streak < old_top_streak:
+                new_top_streak = old_top_streak + 0
+            
+            functions.set_user_data(user.id, new_workout, new_streak, new_skip, new_top_streak) # Updates the user data
+            
         except: # If it doesn't exist.
-            functions.set_user_data(user.id, 0 + 1, 0, 0) # Makes user data
+            functions.set_user_data(user.id, 0 + 1, 0 + 1, 0, 1) # Makes user data
     if reaction.emoji == "❌": # Workout skip
         try:  # If user data exist in our db
-            old_workout, old_streak, old_skip = functions.get_user_data(user.id) # Get old user data
+            old_workout, old_streak, old_skip, old_top_streak = functions.get_user_data(user.id) # Get old user data
             new_workout = old_workout + 0 # now changes
             new_streak  = old_streak * 0 # Resets streak
             new_skip    = old_skip + 1 # Increments streak by one
-            functions.set_user_data(user.id, new_workout, new_streak, new_skip) # Updates db
+            print(f"Purano: {old_top_streak} Naya: {new_streak} ")
+            new_top_streak = old_top_streak
+            functions.set_user_data(user.id, new_workout, new_streak, new_skip, new_top_streak) # Updates db
         except: # If it doesn't exist.
-            functions.set_user_data(user.id, 0, 0, 1 )# Makes user data
+            functions.set_user_data(user.id, 0, 0, 1, 0)# Makes user data
 
 async def print_routine(ch):
     """
@@ -104,27 +112,27 @@ async def profile(ctx, member : discord.Member):
         workout, streak, skips = user data
     """
     try: # If user data is in our database
-        workout, streak, skips = functions.get_user_data(member.id)
+        workout, streak, skips, top_streak = functions.get_user_data(member.id)
         profile_embed = discord.Embed(title="Profile", description=f"{member.name}'s profile", color = discord.Color.purple())
         profile_embed.set_thumbnail(url = member.avatar_url)
         profile_embed.add_field(name="Workouts: ", value = f"{workout} Days", inline=True) # Workouts
         profile_embed.add_field(name="Skips: ", value = f"{skips}", inline=True) # Skips
         profile_embed.add_field(name="Streaks: ", value = f"{streak}", inline=True)
-        profile_embed.set_footer(text = f"W/S: {int(skips) * int(workout)  }")
+        profile_embed.set_footer(text = f"{member.name}'s top streak: {top_streak}")
         await ctx.send(content=None, embed=profile_embed)
-        profile_embed.set_footer(text = f'{member.name}')
+
 
     except: # If its not in our database, make it.
-        functions.set_user_data(member.id, 0, 0, 0)
-        workout, streak, skips = functions.get_user_data(member.id)
+        functions.set_user_data(member.id, 1, 0, 0, 1)
+        workout, streak, skips, top_streak = functions.get_user_data(member.id)
         profile_embed = discord.Embed(title="Profile", description=f"{member.name}'s' Profile", color = discord.Color.purple())
         profile_embed.set_thumbnail(url = member.avatar_url)
         profile_embed.add_field(name="Workouts: ", value = f"{workout} Days", inline=True) # Workouts
         profile_embed.add_field(name="Skips: ", value = f"{skips}", inline=True) # Skips
         profile_embed.add_field(name="Streaks: ", value = f"{streak}", inline=True)
-        profile_embed.set_footer(text = f"W/S: {int(skips) * int(workout)  }")
+        profile_embed.set_footer(text = f"{member.name}'s top streak: {top_streak}")
         await ctx.send(content=None, embed=profile_embed)
-        profile_embed.set_footer(text = f'{member.name}')
+
 
 @profile.error
 async def profile_handler(ctx, error):
@@ -137,27 +145,26 @@ async def profile_handler(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         if error.param.name == 'member':
             try: # If user data is in our database
-                workout, streak, skips = functions.get_user_data(ctx.author.id)
+                workout, streak, skips, top_streak = functions.get_user_data(ctx.author.id)
                 profile_embed = discord.Embed(title="Profile", description= f"{ctx.author.name} Profile", color = discord.Color.purple())
                 profile_embed.set_thumbnail(url = ctx.author.avatar_url)
                 profile_embed.add_field(name="Workouts: ", value = f"{workout} Days", inline=True) # Workouts
                 profile_embed.add_field(name="Skips: ", value = f"{skips}", inline=True) # Skips
                 profile_embed.add_field(name="Streaks: ", value = f"{streak}", inline=True)
-                profile_embed.set_footer(text = f"W/S: {int(skips) * int(workout)  }")
+                profile_embed.set_footer(text = f"{ctx.author.name}'s top streak: {top_streak}")
                 await ctx.send(content=None, embed=profile_embed)
-                profile_embed.set_footer(text = f'{ctx.author.name}')
+
 
             except: # If its not in our database, make it.
-                functions.set_user_data(ctx.author.id, 0, 0, 0)
-                workout, streak, skips = functions.get_user_data(ctx.author.id)
+                functions.set_user_data(ctx.author.id, 1, 0, 0, 1)
+                workout, streak, skips, top_streak = functions.get_user_data(ctx.author.id)
                 profile_embed = discord.Embed(title="Profile", description=f"{ctx.author.name}", color = discord.Color.purple())
                 profile_embed.set_thumbnail(url = ctx.author.avatar_url)
                 profile_embed.add_field(name="Workouts: ", value = f"{workout} Days", inline=True) # Workouts
                 profile_embed.add_field(name="Skips: ", value = f"{skips}", inline=True) # Skips
                 profile_embed.add_field(name="Streaks: ", value = f"{streak}", inline=True)
-                profile_embed.set_footer(text = f"W/S: {int(skips) * int(workout)  }")
+                profile_embed.set_footer(text = f"{ctx.author.name}'s top streak: {top_streak}")
                 await ctx.send(content=None, embed=profile_embed)
-                profile_embed.set_footer(text = f'{ctx.author.name}')
 
 
 
@@ -165,8 +172,10 @@ async def profile_handler(ctx, error):
 #for Attendance reaction
 @client.command(pass_contest=True)
 async def attendence(ctx):
+    today = today = datetime.today()
+    today_date = today.strftime("%d/%m/%Y")
     attendence_embed = discord.Embed(
-        title = "Attendance 📋",
+        title = f"{today_date}'s Attendance 📋",
         description = " React below to Mark your attendance  ",
         color= discord.Color.purple()
     )
@@ -250,8 +259,10 @@ async def check_reminder():
         
         if current_time == str(attendence_time): # Attendence
             await channel.send(f'<@&{827955469884325909}> Did you do your workout?: ')
+            today = today = datetime.today()
+            today_date = today.strftime("%d/%m/%Y")
             attendence_embed = discord.Embed(
-                title = "Attendance 📋",
+                title = f"{today_date}'s Attendance 📋",
                 description = " React below to Mark your attendance  ",
                 color= discord.Color.purple()
             )

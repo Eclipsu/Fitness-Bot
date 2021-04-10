@@ -82,12 +82,13 @@ def get_user_data(user_id):
     """    
     with open('attendence.json', 'r') as openfile:
         db = json.load(openfile)
-        workouts  = db[f"{user_id}"]["workouts"] 
-        streaks   = db[f"{user_id}"]["streaks"]
-        skips     = db[f"{user_id}"]["skips"]
-    return workouts, streaks, skips
+        workouts   = db[f"{user_id}"]["workouts"] 
+        streaks    = db[f"{user_id}"]["streaks"]
+        skips      = db[f"{user_id}"]["skips"]
+        top_streak = db[f"{user_id}"]["top_streak"]
+    return workouts, streaks, skips, top_streak
 
-def set_user_data(user_id, workout, streak, skip):
+def set_user_data(user_id, workout, streak, skip, top_streak):
     """
     sets user data
     """
@@ -95,7 +96,7 @@ def set_user_data(user_id, workout, streak, skip):
 
         db = json.load(openfile)
         
-        db.update({str(user_id):{"workouts":workout,"streaks":streak,"skips":skip}})
+        db.update({str(user_id):{"workouts":workout,"streaks":streak,"skips":skip,"top_streak":top_streak}})
         openfile.seek(0)
 
         json.dump(db, openfile, indent = 4)
